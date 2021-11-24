@@ -1,0 +1,24 @@
+{
+  "name": "shop-e-stop-backend",
+  "version": "1.0.0",
+  "description": "This is the backend folder of Shop - E - Stop web application made for SDP SEM III",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tanmay19code/Shop_E_Stop-Backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tanmay19code/Shop_E_Stop-Backend/issues"
+  },
+  "homepage": "https://github.com/Tanmay19code/Shop_E_Stop-Backend#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^6.0.13",
+    "nodemon": "^2.0.15"
+  }
+}
