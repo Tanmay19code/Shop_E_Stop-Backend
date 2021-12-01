@@ -3,6 +3,8 @@ const router = express.Router();
 const { body, validationResult } = require("express-validator");
 const createuser = require("./createuser.js");
 const login = require("./login.js");
+const getuser = require("./getuser.js");
+const fetchuser = require("../../middleware/fetchuser.js");
 
 //Route 1: Create an user using : POST "/api/auth/createuser" . Doesn't require authentication
 router.post(
@@ -29,5 +31,8 @@ router.post(
   ],
   login
 );
+
+//Route 3: Get logged in user details : POST "/api/auth/getuser" . login required
+router.post("/getuser", fetchuser, getuser);
 
 module.exports = router;
