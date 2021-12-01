@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
+require("dotenv").config({ path: "./.env" });
 
-const mongoURI =
-  "mongodb+srv://tanmay:<password>@shop-e-stop.4kj1m.mongodb.net/test";
+const mongoURI = process.env.CONNECTION_STRING;
 
 const connectToMongoose = () => {
   mongoose.connect(mongoURI, () => {

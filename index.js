@@ -5,12 +5,12 @@ const express = require("express");
 connectToMongoose();
 
 const app = express();
-const port = 5000;
+const PORT = 5000;
 
 app.use(express.json());
 
-app.use('/auth',require('./routes/auth.js'))
+app.use("/api/auth", require("./routes/authentication/auth.js"));
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+app.listen(PORT, () => {
+  console.log(`Server is running at http://localhost:${PORT}`);
 });
