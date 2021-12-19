@@ -1,10 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const { body, validationResult } = require("express-validator");
-const createuser = require("./createuser.js");
-const login = require("./login.js");
-const getuser = require("./getuser.js");
-const fetchuser = require("../../middleware/fetchuser.js");
+// const createuser = require("./authentication/createuser.js");
+// const login = require("./authentication/login.js");
+// const getuser = require("./authentication/getuser.js");
+const {
+  createuser,
+  login,
+  getuser,
+} = require("../controllers/auth.controller");
+const fetchuser = require("../middlewares/fetchuser.middleware.js");
 
 //Route 1: Create an user using : POST "/api/auth/createuser" . Doesn't require authentication
 router.post(

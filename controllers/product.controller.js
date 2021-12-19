@@ -1,18 +1,17 @@
-const Product = require("../../models/Product.js");
+const Product = require("../models/user.model.js");
 const response = {
   success: true,
   message: "",
 };
 const createproduct = async (req, res) => {
   const { name, category, price } = req.body;
-  let product;
   let createdBy = req.user.id;
   console.log(createdBy);
-  product = await Product.create({
+  await Product.create({
     name: name,
     category: category,
     price: price,
-    createdBy:createdBy,
+    createdBy: createdBy,
   })
     .then((result) => {
       if (result) {
@@ -32,4 +31,4 @@ const createproduct = async (req, res) => {
     });
 };
 
-module.exports = createproduct;
+module.exports = { createproduct };
