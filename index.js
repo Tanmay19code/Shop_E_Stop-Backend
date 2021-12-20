@@ -1,6 +1,6 @@
 const connectToMongoose = require("./database/db");
 
-var cors = require("cors");
+// var cors = require("cors");
 const express = require("express");
 
 connectToMongoose();
@@ -8,8 +8,8 @@ connectToMongoose();
 const app = express();
 const PORT = 5000;
 
+// app.use(cors());
 app.use(express.json());
-app.use(cors());
 
 app.use("/api/auth", require("./routes/auth.route.js"));
 app.use("/api/product", require("./routes/product.route.js"));

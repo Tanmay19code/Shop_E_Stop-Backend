@@ -50,7 +50,7 @@ const createuser = async (req, res) => {
     })
     .catch((error) => {
       response.success = false;
-      response.message = "Some error occured";
+      response.message = "Some error has occured";
       console.log(response);
       res.send(error.message);
     });

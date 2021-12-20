@@ -1,4 +1,4 @@
-const Product = require("../models/user.model.js");
+const Product = require("../models/product.model.js");
 const response = {
   success: true,
   message: "",
