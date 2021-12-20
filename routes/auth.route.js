@@ -37,7 +37,7 @@ router.post(
   login
 );
 
-//Route 3: Get logged in user details : GET "/api/auth/getuser" . login required
-router.get("/getuser", fetchuser, getuser);
+//Route 3: Get logged in user details : POST "/api/auth/getuser" . login required
+router.post("/getuser", fetchuser, getuser);
 
 module.exports = router;
