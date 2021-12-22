@@ -8,6 +8,7 @@ const {
   createuser,
   login,
   getuser,
+  updateuser,
 } = require("../controllers/auth.controller");
 const fetchuser = require("../middlewares/fetchuser.middleware.js");
 
@@ -17,6 +18,7 @@ router.post(
   [
     body("name", "Enter valid name").isLength({ min: 3 }),
     body("email", "Enter valid email").isEmail(),
+    body("mobile", "Enter  valid mobile number").isLength({ min: 10 }),
     body("password", "Password must be atleast of 5 characters").isLength({
       min: 5,
     }),
@@ -39,5 +41,20 @@ router.post(
 
 //Route 3: Get logged in user details : POST "/api/auth/getuser" . login required
 router.post("/getuser", fetchuser, getuser);
+
+//Route 4: Update user: PUT "/api/auth/getuser" . login required
+router.put(
+  "/updateuser/:id",
+  [
+    body("name", "Enter valid name").isLength({ min: 3 }),
+    body("email", "Enter valid email").isEmail(),
+    body("mobile", "Enter  valid mobile number").isLength({ min: 10 }),
+    body("primaryAddress", "Address must be atleast of 20 characters").isLength(
+      { min: 20 }
+    ),
+  ],
+  fetchuser,
+  updateuser
+);
 
 module.exports = router;

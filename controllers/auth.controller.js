@@ -16,7 +16,7 @@ const createuser = async (req, res) => {
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-  const { name, email, password, primaryAddress } = req.body;
+  const { name, email, mobile, password, primaryAddress } = req.body;
   let user = await User.findOne({ email: email });
 
   if (user) {
@@ -31,6 +31,7 @@ const createuser = async (req, res) => {
   user = await User.create({
     name: name,
     email: email,
+    mobile: mobile,
     password: securedPassword,
     primaryAddress: primaryAddress,
   })
@@ -112,4 +113,52 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { createuser, getuser, login };
+const updateuser = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  const createdBy = req.user.id;
+  const userId = req.params.id;
+  const { name, primaryAddress, mobile } = req.body;
+  if (createdBy != userId) {
+    response.success = false;
+    response.message = "User cannot change another user's data";
+    console.log(response);
+    return res.status(404).send("Action not allowed");
+  }
+  const updatedUser = {
+    name: name,
+    mobile: mobile,
+    primaryAddress: primaryAddress,
+  };
+  await User.findOneAndUpdate(
+    { _id: createdBy },
+    { $set: updatedUser },
+    { new: true }
+  )
+    .then((result) => {
+      if (result) {
+        res.status(200).send({
+          updatedUser: updatedUser,
+          message: "User updated successfully",
+        });
+        response.success = true;
+        response.message = "Product updated succesfully";
+        console.log(response);
+      } else {
+        response.success = false;
+        response.message = "No user found";
+        console.log(response);
+        return res.status(404).send("No such user exist");
+      }
+    })
+    .catch((err) => {
+      response.success = false;
+      response.message = "Some error occured";
+      console.log(response);
+      return res.status(500).send(err.message);
+    });
+};
+
+module.exports = { createuser, getuser, login, updateuser };
