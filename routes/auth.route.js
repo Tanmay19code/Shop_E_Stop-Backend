@@ -9,6 +9,7 @@ const {
   login,
   getuser,
   updateuser,
+  deleteuser,
 } = require("../controllers/auth.controller");
 const fetchuser = require("../middlewares/fetchuser.middleware.js");
 
@@ -56,5 +57,8 @@ router.put(
   fetchuser,
   updateuser
 );
+
+//Route 5: Delete user: DELETE "/api/auth/getuser" . login required
+router.delete("/deleteuser/:id", fetchuser, deleteuser);
 
 module.exports = router;

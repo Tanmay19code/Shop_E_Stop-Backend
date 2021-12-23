@@ -57,12 +57,31 @@ const createuser = async (req, res) => {
     });
 };
 
-// Get the user through header
+// Get the user through header authtoken
 const getuser = async (req, res) => {
   try {
     const userId = req.user.id;
-    const user = await User.findById(userId).select("-password");
-    res.send(user);
+    await User.findById(userId)
+      .select("-password")
+      .then((result) => {
+        if (result) {
+          res.send(result);
+          response.success = true;
+          response.message = "User found";
+          console.log(response);
+        } else {
+          response.success = false;
+          response.message = "No user found";
+          console.log(response);
+          return res.status(404).send("No such user exist");
+        }
+      })
+      .catch((err) => {
+        response.success = false;
+        response.message = "Some error occured";
+        console.log(response);
+        return res.status(500).send(err.message);
+      });
   } catch (err) {
     console.log(err.message);
     res.status(500).send("Error occured");
@@ -113,6 +132,7 @@ const login = async (req, res) => {
   }
 };
 
+// update user
 const updateuser = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -161,4 +181,39 @@ const updateuser = async (req, res) => {
     });
 };
 
-module.exports = { createuser, getuser, login, updateuser };
+// delete user
+const deleteuser = async (req, res) => {
+  const createdBy = req.user.id;
+  const userId = req.params.id;
+  if (createdBy != userId) {
+    response.success = false;
+    response.message = "User cannot delete another user's data";
+    console.log(response);
+    return res.status(404).send("Action not allowed");
+  }
+  await User.findOneAndDelete({ _id: userId })
+    .then((result) => {
+      if (result) {
+        res.status(200).send({
+          deletedUser: result,
+          message: "User deleted successfully",
+        });
+        response.success = true;
+        response.message = "User deleted succesfully";
+        console.log(response);
+      } else {
+        response.success = false;
+        response.message = "No user found";
+        console.log(response);
+        return res.status(404).send("No such user exist");
+      }
+    })
+    .catch((err) => {
+      response.success = false;
+      response.message = "Some error occured";
+      console.log(response);
+      return res.status(500).send(err.message);
+    });
+};
+
+module.exports = { createuser, getuser, login, updateuser, deleteuser };

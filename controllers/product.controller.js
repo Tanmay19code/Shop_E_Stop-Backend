@@ -39,7 +39,7 @@ const createproduct = async (req, res) => {
 const getproduct = async (req, res) => {
   try {
     const productId = req.params.id;
-    const product = await Product.findById(productId);
+    const product = await Product.findById(productId)
     // .populate("createdBy");
     response.success = true;
     response.message = "Product retrieved succesfully";
