@@ -19,6 +19,10 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
+  isSeller: {
+    type: Boolean,
+    default: false,
+  },
   primaryAddress: {
     type: String,
     required: true,

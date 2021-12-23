@@ -16,7 +16,7 @@ const createuser = async (req, res) => {
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-  const { name, email, mobile, password, primaryAddress } = req.body;
+  const { name, email, mobile, password, primaryAddress, isSeller } = req.body;
   let user = await User.findOne({ email: email });
 
   if (user) {
@@ -32,6 +32,7 @@ const createuser = async (req, res) => {
     name: name,
     email: email,
     mobile: mobile,
+    isSeller: isSeller || false,
     password: securedPassword,
     primaryAddress: primaryAddress,
   })
@@ -140,7 +141,7 @@ const updateuser = async (req, res) => {
   }
   const createdBy = req.user.id;
   const userId = req.params.id;
-  const { name, primaryAddress, mobile } = req.body;
+  const { name, primaryAddress,isSeller, mobile } = req.body;
   if (createdBy != userId) {
     response.success = false;
     response.message = "User cannot change another user's data";
@@ -150,6 +151,7 @@ const updateuser = async (req, res) => {
   const updatedUser = {
     name: name,
     mobile: mobile,
+    isSeller: isSeller,
     primaryAddress: primaryAddress,
   };
   await User.findOneAndUpdate(
