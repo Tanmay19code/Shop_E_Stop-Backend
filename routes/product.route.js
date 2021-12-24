@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const multer = require("multer");
 const {
   createproduct,
   getproduct,
@@ -8,11 +9,29 @@ const {
   updateproduct,
   deleteproduct,
 } = require("../controllers/product.controller.js");
+
+const fileStorageEngine = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "./images/");
+  },
+  filename: (req, file, cb) => {
+    const fileName = file.originalname.split(" ").join("_");
+    cb(null, "IMG" + Date.now() + "_" + fileName);
+  },
+});
+
+const upload = multer({ storage: fileStorageEngine });
+
 const fetchuser = require("../middlewares/fetchuser.middleware");
 
 //Route 1: Create new product : POST "/api/product/createproduct"
 // login required
-router.post("/createproduct", fetchuser, createproduct);
+router.post(
+  "/createproduct",
+  fetchuser,
+  upload.single("product_image"),
+  createproduct
+);
 
 //Route 2: Get product : POST "/api/product/createproduct" .
 // login not required

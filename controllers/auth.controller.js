@@ -141,7 +141,7 @@ const updateuser = async (req, res) => {
   }
   const createdBy = req.user.id;
   const userId = req.params.id;
-  const { name, primaryAddress,isSeller, mobile } = req.body;
+  const { name, primaryAddress, isSeller, mobile } = req.body;
   if (createdBy != userId) {
     response.success = false;
     response.message = "User cannot change another user's data";

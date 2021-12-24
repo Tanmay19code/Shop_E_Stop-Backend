@@ -1,4 +1,17 @@
 const Product = require("../models/product.model.js");
+const fs = require("fs");
+// const multer = require("multer");
+
+// const fileStorageEngine = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, "../images/");
+//   },
+//   filename: (req, file, cb) => {
+//     cb(null, Date.now() + "--" + file.originalname);
+//   },
+// });
+
+// const upload = multer({ storage: fileStorageEngine });
 
 // object for response in console
 const response = {
@@ -9,10 +22,53 @@ const response = {
 // controller for create product
 const createproduct = async (req, res) => {
   const { name, category, price } = req.body;
+  const reqFile = req.file;
+  console.log(reqFile); /**********/
+  const maxImgSize = 1000000;
+  const imageType = ["image/png", "image/jpeg", "image/jpg"];
+  const imageSize = reqFile.size;
+
+  const productImage = `http://localhost:5000/images/${reqFile.filename}`;
+
+  if (!imageType.includes(reqFile.mimetype)) {
+    response.success = false;
+    response.message =
+      "File format not supported. Image with extension .png, .jpg, .jpeg supported";
+    console.log(response);
+    /****To delete image when format is not supported****/
+    // fs.unlink(`./images/${reqFile.filename}}`, (err) => {
+    //   if (err) {
+    //     console.log(err.message);
+    //     return res.send({ message: err.message });
+    //   }
+    // });
+    return res.status(415).send({
+      message:
+        "File format not supported. Image with extension .png, .jpg, .jpeg supported",
+    });
+  }
+
+  if (imageSize > maxImgSize) {
+    response.success = false;
+    response.message =
+      "File size exceeded. Maximum size allowed :" + maxImgSize;
+    console.log(response);
+    /****To delete image when size is exceeded****/
+    // fs.unlink(`./images/${reqFile.filename}}`, (err) => {
+    //   if (err) {
+    //     console.log(err.message);
+    //     return res.send({ message: err.message });
+    //   }
+    // });
+    return res.status(415).send({
+      message: "File size exceeded. Maximum size allowed :" + maxImgSize,
+    });
+  }
+
   let createdBy = req.user.id;
-  // console.log(createdBy);
   await Product.create({
     name: name,
+    image: productImage,
     category: category,
     price: price,
     createdBy: createdBy,
@@ -39,7 +95,7 @@ const createproduct = async (req, res) => {
 const getproduct = async (req, res) => {
   try {
     const productId = req.params.id;
-    const product = await Product.findById(productId)
+    const product = await Product.findById(productId);
     // .populate("createdBy");
     response.success = true;
     response.message = "Product retrieved succesfully";
