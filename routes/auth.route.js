@@ -7,6 +7,7 @@ const { body, validationResult } = require("express-validator");
 const {
   createuser,
   login,
+  logout,
   getuser,
   updateuser,
   deleteuser,
@@ -60,5 +61,8 @@ router.put(
 
 //Route 5: Delete user: DELETE "/api/auth/getuser" . login required
 router.delete("/deleteuser/:id", fetchuser, deleteuser);
+
+//Route 6: Logout user: POST "api/auth/logout". Login required
+router.post("/logout", fetchuser, logout);
 
 module.exports = router;

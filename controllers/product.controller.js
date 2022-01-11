@@ -10,65 +10,62 @@ const response = {
 // controller for create product
 const createproduct = async (req, res) => {
   const { name, category, price } = req.body;
-  const reqFile = req.files.product_image_main[0];
+  const reqFile = req.file;
   // console.log(req.files.product_image_main);
   let productImage;
-  let productImageArray;
-  const reqFiles = req.files.product_image_array;
+  // let productImageArray;
+  // const reqFiles = req.files.product_image_array;
   const maxImgSize = 1000000;
   const imageType = ["image/png", "image/jpeg", "image/jpg"];
 
-  
-  const validation = (image) => {
-    if (!imageType.includes(image.mimetype)) {
-      response.success = false;
-      response.message =
-        "File format not supported. Image with extension .png, .jpg, .jpeg supported";
-      console.log(response);
-      /****To delete image when format is not supported****/
-      fs.unlink(`./images/${image.filename}`, (err) => {
-        if (err) {
-          console.log(err.message);
-          return res.send({ message: err.message });
-        }
-      });
-      return res.status(415).send({
-        message:
-          "File format not supported. Image with extension .png, .jpg, .jpeg supported",
-      });
-    } else if (image.size > maxImgSize) {
-      response.success = false;
-      response.message =
-        "File size exceeded. Maximum size allowed :" + maxImgSize;
-      console.log(response);
-      /****To delete image when size is exceeded****/
-      fs.unlink(`./images/${image.filename}`, (err) => {
-        if (err) {
-          console.log(err.message);
-          return res.send({ message: err.message });
-        }
-      });
-      return res.status(415).send({
-        message: "File size exceeded. Maximum size allowed :" + maxImgSize,
-      });
-    } else {
-      return true;
-    }
-  };
-
-  if (validation(reqFile)) {
-    productImage = `http://localhost:5000/images/${reqFile.filename}`;
+  if (!imageType.includes(reqFile.mimetype)) {
+    response.success = false;
+    response.message =
+      "File format not supported. Image with extension .png, .jpg, .jpeg supported";
+    console.log(response);
+    /****To delete image when format is not supported****/
+    fs.unlink(`./images/${reqFile.filename}`, (err) => {
+      if (err) {
+        console.log(err.message);
+        return res.send({ message: err.message });
+      }
+    });
+    return res.status(415).send({
+      message:
+        "File format not supported. Image with extension .png, .jpg, .jpeg supported",
+    });
+  } else if (reqFile.size > maxImgSize) {
+    response.success = false;
+    response.message =
+      "File size exceeded. Maximum size allowed :" + maxImgSize;
+    console.log(response);
+    /****To delete image when size is exceeded****/
+    fs.unlink(`./images/${reqFile.filename}`, (err) => {
+      if (err) {
+        console.log(err.message);
+        return res.send({ message: err.message });
+      }
+    });
+    return res.status(415).send({
+      message: "File size exceeded. Maximum size allowed :" + maxImgSize,
+    });
   } else {
-    console.log("File validation failed");
+    productImage = `http://localhost:5000/images/${reqFile.filename}`;
   }
 
-  for (let index = 0; index < reqFiles.length; index++) {
-    const element = reqFiles[index];
-    if(
-      validation(element)) {
-      productImageArray[index] = `http://localhost:5000/images/${element.filename}`
-    }
-  }
+  // if (validation(reqFile)) {
+  //   productImage = `http://localhost:5000/images/${reqFile.filename}`;
+  // } else {
+  //   console.log("File validation failed");
+  // }
+
+  // for (let index = 0; index < reqFiles.length; index++) {
+  //   const element = reqFiles[index];
+  //   if(
+  //     validation(element)) {
+  //     productImageArray[index] = `http://localhost:5000/images/${element.filename}`
+  //   }
+  // }
 
   let createdBy = req.user.id;
   await Product.create({

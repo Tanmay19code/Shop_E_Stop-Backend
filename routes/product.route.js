@@ -29,17 +29,17 @@ const fetchuser = require("../middlewares/fetchuser.middleware");
 router.post(
   "/createproduct",
   fetchuser,
-  // upload.single("product_image"),
-  upload.fields([
-    {
-      name: "product_image_main",
-      maxCount: 1
-    },
-    {
-      name: "product_image_array",
-      maxCount: 5
-    }
-  ]),
+  upload.single("product_image"),
+  // upload.fields([
+  //   {
+  //     name: "product_image_main",
+  //     maxCount: 1
+  //   },
+  //   {
+  //     name: "product_image_array",
+  //     maxCount: 5
+  //   }
+  // ]),
   createproduct
 );
 

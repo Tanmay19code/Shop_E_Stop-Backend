@@ -11,9 +11,9 @@ const ProductSchema = new Schema({
     type: String,
     required: true,
   },
-  image_array: {
-    type: []
-  },
+  // image_array: {
+  //   type: []
+  // },
   name: {
     type: String,
     required: true,

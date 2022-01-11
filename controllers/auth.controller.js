@@ -62,6 +62,7 @@ const createuser = async (req, res) => {
 const getuser = async (req, res) => {
   try {
     const userId = req.user.id;
+    // console.log("HEADER CHECK=>", userId);
     await User.findById(userId)
       .select("-password")
       .then((result) => {
@@ -123,10 +124,26 @@ const login = async (req, res) => {
       },
     };
     const authtoken = jwt.sign(data, JWT_SECRET);
-    res.json({ authtoken });
+    res.send({ authtoken });
     response.success = true;
     response.message = "Login successfull";
     console.log(response);
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send("Some Internal Server Error occured");
+  }
+};
+
+const logout = async (req, res) => {
+  try {
+    const userId = req.user;
+    if (!userId) {
+      response.success = false;
+      response.message = "User not logged in!!";
+      console.log(response);
+      return res.status(400).json({ error: "User has not logged in !!" });
+    }
+    
   } catch (err) {
     console.log(err.message);
     res.status(500).send("Some Internal Server Error occured");
@@ -218,4 +235,4 @@ const deleteuser = async (req, res) => {
     });
 };
 
-module.exports = { createuser, getuser, login, updateuser, deleteuser };
+module.exports = { createuser, getuser, login, logout, updateuser, deleteuser };
