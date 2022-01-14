@@ -12,7 +12,7 @@ const {
 
 const fileStorageEngine = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "./images/");
+    cb(null, "./views/client/src/backendimages");
   },
   filename: (req, file, cb) => {
     const fileName = file.originalname.split(" ").join("_");

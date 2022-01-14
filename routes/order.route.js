@@ -12,9 +12,9 @@ const {
 const fetchuser = require("../middlewares/fetchuser.middleware");
 
 router.post("/add-cart-items", fetchuser, addCartItems);
-router.get("/getcart", fetchuser, getCartItems);
+router.post("/getcart", fetchuser, getCartItems);
 router.put("/update-cart-item/:cartItemId", fetchuser, updateCartItem);
-router.delete("/delete-cart-item/:cartItemId", fetchuser, deleteCartItem);
+router.post("/delete-cart-item/:cartItemId", fetchuser, deleteCartItem);
 router.post("/my-orders", fetchuser, getOrders);
 router.post("/place-order", fetchuser, placeOrder);
 router.delete("/cancel-order/:cartId", fetchuser, cancelOrder);

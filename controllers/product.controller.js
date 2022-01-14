@@ -51,7 +51,8 @@ const createproduct = async (req, res) => {
       message: "File size exceeded. Maximum size allowed :" + maxImgSize,
     });
   } else {
-    productImage = `http://localhost:5000/images/${reqFile.filename}`;
+    // productImage = `http://localhost:5000/images/${reqFile.filename}`;
+    productImage = reqFile.filename;
   }
 
   let createdBy = req.user.id;

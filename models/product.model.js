@@ -11,10 +11,11 @@ const ProductSchema = new Schema({
     type: String,
     required: true,
   },
-  // image_array: {
-  //   type: []
-  // },
   name: {
+    type: String,
+    required: true,
+  },
+  description: {
     type: String,
     required: true,
   },
@@ -22,9 +23,23 @@ const ProductSchema = new Schema({
     type: String,
     required: true,
   },
+  highlights: {
+    type: [],
+  },
+  specifications: {
+    type: [
+      {
+        key: "",
+        value: "",
+      },
+    ],
+  },
   price: {
     type: Number,
     required: true,
+  },
+  ranking: {
+    type: Number,
   },
   dateCreated: {
     type: Date,
