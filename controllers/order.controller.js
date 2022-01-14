@@ -11,23 +11,42 @@ const response = {
 
 const getCartItems = async (req, res) => {
   const orderedBy = req.user.id;
-  const cartItems = await CartModel.findOne({ orderedBy: orderedBy }).populate(
-    // "cartItems"
-    [
-      {
-        path: "cartItems",
-        // select: "productId",
-        populate: {
-          path: "productId",
-          model: "product",
+  const cartItems = await CartModel.findOne({ orderedBy: orderedBy })
+    .populate(
+      // "cartItems"
+      [
+        {
+          path: "cartItems",
+          // select: "productId",
+          populate: {
+            path: "productId",
+            model: "product",
+          },
         },
-      },
-      // {
-      //   path: "orderedBy",
-      // },
-    ]
-  );
-  res.send(cartItems);
+        {
+          path: "orderedBy",
+        },
+      ]
+    )
+    .then((result) => {
+      if (result) {
+        res.status(200).send(result);
+        response.success = true;
+        response.message = "Cart found";
+        console.log(response);
+      } else {
+        res.status(200).send(null);
+        response.success = null;
+        response.message = "Cart is empty";
+        console.log(response);
+      }
+    })
+    .catch((err) => {
+      res.status(500).send(err.message);
+      response.success = false;
+      response.message = "Some internal error occurred";
+      console.log(response);
+    });
 };
 
 const addCartItems = async (req, res) => {

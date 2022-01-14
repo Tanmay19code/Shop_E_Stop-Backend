@@ -20,6 +20,9 @@ const createuser = async (req, res) => {
   let user = await User.findOne({ email: email });
 
   if (user) {
+    response.success = false;
+    response.message = "Email already exists";
+    console.log(response);
     return res
       .status(400)
       .json({ error: "A user with this email already exists" });

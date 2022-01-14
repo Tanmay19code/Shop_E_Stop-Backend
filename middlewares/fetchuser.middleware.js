@@ -3,9 +3,10 @@ require("dotenv").config({ path: "../.env" });
 const JWT_SECRET = process.env.JWT_SECRET;
 
 const fetchuser = (req, res, next) => {
+  // console.log("Middleware Trial =>","token");
   //Get the user from the jwt token and add id to req object
   const token = req.header("authtoken");
-  // console.log("Middleware =>",req);
+  // console.log("Middleware =>",token);
   if (!token) {
     res.status(401).send({ error: "Please authenticate using a valid token" });
   }

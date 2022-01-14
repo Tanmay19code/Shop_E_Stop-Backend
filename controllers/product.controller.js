@@ -9,7 +9,8 @@ const response = {
 
 // controller for create product
 const createproduct = async (req, res) => {
-  const { name, category, price } = req.body;
+  const { name, description, category, price, highlights, specifications } =
+    req.body;
   const reqFile = req.file;
   // console.log(req.files.product_image_main);
   let productImage;
@@ -53,28 +54,16 @@ const createproduct = async (req, res) => {
     productImage = `http://localhost:5000/images/${reqFile.filename}`;
   }
 
-  // if (validation(reqFile)) {
-  //   productImage = `http://localhost:5000/images/${reqFile.filename}`;
-  // } else {
-  //   console.log("File validation failed");
-  // }
-
-  // for (let index = 0; index < reqFiles.length; index++) {
-  //   const element = reqFiles[index];
-  //   if(
-  //     validation(element)) {
-  //     productImageArray[index] = `http://localhost:5000/images/${element.filename}`
-  //   }
-  // }
-
   let createdBy = req.user.id;
   await Product.create({
     name: name,
     image: productImage,
-    // image_array:
+    description: description,
     category: category,
     price: price,
     createdBy: createdBy,
+    highlights: highlights,
+    specifications: specifications,
   })
     .then((result) => {
       if (result) {
@@ -88,7 +77,7 @@ const createproduct = async (req, res) => {
     })
     .catch((error) => {
       response.success = false;
-      response.message = "Some error occured";
+      response.message = "Some error occured!!";
       console.log(response);
       res.send(error.message);
     });
