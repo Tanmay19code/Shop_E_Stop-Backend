@@ -107,7 +107,7 @@ function Navbar() {
           </li>
         </ul>
 
-        <div className="navbar-search">
+        {/* <div className="navbar-search">
           <form>
             <IoIosSearch className="navbar-search-logo" type="submit" />
             <input
@@ -115,7 +115,7 @@ function Navbar() {
               placeholder="Search for products....."
             />
           </form>
-        </div>
+        </div> */}
         <div
           className={`navbar-profile-menu-${
             menuEnabled ? "enabled" : "disabled"
