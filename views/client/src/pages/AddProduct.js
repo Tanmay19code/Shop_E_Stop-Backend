@@ -7,14 +7,21 @@ import { useDispatch } from "react-redux";
 import { addProduct } from "../redux/actions/productActions.js";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+const form_data = require("form-data");
 
 const AddProduct = () => {
+  let form = new form_data();
+
+  const [image, setImage] = useState();
+  let image_display = document.getElementById("output-display");
+
   const dispatch = useDispatch(null);
   const navigate = useNavigate();
 
   var loadFile = function (event) {
-    var image = document.getElementById("output-display");
-    image.src = URL.createObjectURL(event.target.files[0]);
+    image_display.src = URL.createObjectURL(event.target.files[0]);
+    console.log(event.target.files[0]);
+    setImage(event.target.files[0]);
   };
 
   // const [highlights, setHighlights] = useState([])
@@ -30,7 +37,20 @@ const AddProduct = () => {
     price: 0,
   });
   // console.log(highlights);
+  // form.set("name", formData.name);
+  // form.set("description", formData.description);
+  // form.set("category", formData.category);
+  // form.set("ranking", formData.ranking);
+  // form.set("price", formData.price);
+  // form.set("highlights", highlights);
+  // form.set("specifications", specifications);
 
+  // for (let pair of form.entries()) {
+  //   console.log(pair[0] + ", " + pair[1]);
+  // }
+
+  console.log("UPLOADED IMG=>", image);
+  
   const onHighlightsChange = (index) => (e) => {
     auxArray = [...highlights];
     auxArray[index] = e.target.value;
@@ -57,14 +77,20 @@ const AddProduct = () => {
   };
 
   const onSubmit = async (e) => {
+    form.set("name", formData.name);
+    form.set("description", formData.description);
+    form.set("category", formData.category);
+    form.set("ranking", formData.ranking);
+    form.set("price", formData.price);
+    form.set("product_image", image.src);
     e.preventDefault();
-    dispatch(addProduct(formData, highlights, specifications))
+    dispatch(addProduct(formData, image, highlights, specifications))
       .then(() => {
         toast.success("Product Added Successfully");
-        setTimeout(() => {
-          navigate("/");
-          window.location.reload(false);
-        }, 3000);
+        // setTimeout(() => {
+        //   navigate("/");
+        //   window.location.reload(false);
+        // }, 3000);
         // setTimeout(() => {
         //   window.location.reload(false);
         // }, 3);
@@ -77,6 +103,7 @@ const AddProduct = () => {
   return (
     <form
       method="POST"
+      encType="multipart/form-data"
       className="page-container product-container"
       onSubmit={(e) => onSubmit(e)}
     >

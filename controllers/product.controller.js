@@ -9,6 +9,9 @@ const response = {
 
 // controller for create product
 const createproduct = async (req, res) => {
+
+  console.log("RES_PRO_CON=>", req);
+
   const { name, description, category, price, highlights, specifications } =
     req.body;
   const reqFile = req.file;
@@ -51,7 +54,7 @@ const createproduct = async (req, res) => {
       message: "File size exceeded. Maximum size allowed :" + maxImgSize,
     });
   } else {
-    // productImage = `http://localhost:5000/images/${reqFile.filename}`;
+    productImage = `http://localhost:5000/images/${reqFile.filename}`;
     productImage = reqFile.filename;
   }
 

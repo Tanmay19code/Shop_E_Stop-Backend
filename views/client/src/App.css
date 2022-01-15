@@ -242,13 +242,15 @@ hr {
 }
 
 .card-image {
+    max-height: 170px;
     text-align: center;
     height: 120px;
     margin-bottom: 20px;
 }
 
 .card-image img {
-    width: 120px;
+    max-height: 170px;
+    /* width: 120px; */
     /* height: 120px; */
     /* border: 1px solid #a1a1a188; */
     margin-top: 10px;
@@ -336,6 +338,7 @@ Carousel
 /****************
 MY CART
 *****************/
+
 
 .cart-products-holder {
     width: 90%;
@@ -548,6 +551,10 @@ MY CART
     border-radius: 5px;
     font-family: 'Bitter', serif;
     font-weight: bold;
+}
+
+.cart-button2:hover{
+    cursor: pointer;
 }
 
 .empty-cart {
@@ -991,6 +998,7 @@ Product Page
 .product-title-description ul {
     list-style: none;
     margin-left: 2px;
+    margin-bottom: 40px;
 }
 
 .product-title-description ul li {

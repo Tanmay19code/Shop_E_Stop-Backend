@@ -87,7 +87,8 @@ const MyCart = () => {
                     <div className="payment-container">
                       {cart?.cartItems.map((item, index) => {
                         // priceArray.push(item.productQty * item.productId.price);
-                        totalPrice = totalPrice + item.productQty * item.productId.price;
+                        totalPrice =
+                          totalPrice + item.productQty * item.productId.price;
                         return (
                           <div key={index} className="payment-item">
                             <div id="payment-name">
@@ -97,7 +98,7 @@ const MyCart = () => {
                               {/* {() => {
                                 setTotalPrice(item.productQty * item.productId.price); */}
                               {/* {console.log("price x qty",item.productQty * item.productId.price)} */}
-                              
+
                               {/* }} */}
                               {/* {() => { totalPrice = totalPrice + item.productQty * item.productId.price }} */}
                               {/* {() => {
@@ -135,7 +136,7 @@ const MyCart = () => {
                           <p>GRAND TOTAL</p>
                         </div>
                         <div id="payment-price" className="payment-grand-total">
-                          <p>₹36,100</p>
+                          <p>{`₹${totalPrice + 100}`}</p>
                         </div>
                       </div>
                     </div>
@@ -182,11 +183,11 @@ const MyCart = () => {
         </div>
       ) : (
         <div className="empty-cart">
-        <p>Please, Login to view your cart!!</p>
-        <Link to="/login">
-          <input type="button" value="LOGIN" />
-        </Link>
-      </div>
+          <p>Please, Login to view your cart!!</p>
+          <Link to="/login">
+            <input type="button" value="LOGIN" />
+          </Link>
+        </div>
       )}
     </div>
   );

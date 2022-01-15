@@ -144,9 +144,15 @@ const ProductPage = (props) => {
             <li>Preloaded with MS Office</li>
             <li>Light Laptop without Optical Disk Drive</li>
             <li>15.6 inch</li> */}
-                  {product?.highlights.map((item, index) => {
-                    return <li key={index}>{item}</li>;
-                  })}
+                  {product?.highlights
+                    .filter((item) => {
+                      if (item.length > 0) {
+                        return item;
+                      }
+                    })
+                    .map((item, index) => {
+                      return <li key={index}>{item}</li>;
+                    })}
                 </ul>
               )}
             </div>

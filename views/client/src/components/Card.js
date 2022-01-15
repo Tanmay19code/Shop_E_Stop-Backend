@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-// import speaker from "../images/speaker.jpg";
-import speaker from "../backendimages/IMG1642150950509_all_pets.png";
 
 function Card(props) {
   const [image, setImage] = useState("");
@@ -31,7 +29,7 @@ function Card(props) {
           {/* <p id="product-name">SONY D4 speaker</p>
                     <p id="product-price">9,000 ₹</p> */}
           <p id="product-name">{props.name}</p>
-          <p id="product-price">{props.price}</p>
+          <p id="product-price">₹{props.price}</p>
         </div>
       </div>
     </div>

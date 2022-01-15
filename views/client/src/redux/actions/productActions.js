@@ -26,26 +26,32 @@ if (stateObj) {
 // const authtoken = stateObj.auth.token || undefined;
 
 export const addProduct =
-  (formData, highlights, specifications) => async (dispatch) => {
-    const { name, description, rating, price, category } = formData;
+  (formData, image, highlights, specifications) => async (dispatch) => {
+    const { name, description, ranking, price, category } = formData;
     const body = {
       name: name,
       description: description,
-      rating: rating,
+      ranking: ranking,
       price: price,
       category: category,
       highlights: highlights,
       specifications: specifications,
     };
+    // const file = image;
+
     const config = {
       headers: {
-        "Content-Type": "application/json",
+        // "Content-Type": "application/json",
+        // "Content-Type": "multipart/form-data",
         authtoken: authtoken,
         Authorization: `Bearer ${authtoken}`,
       },
     };
     try {
+      console.log("API BODY=>", body);
+      console.log("API IMAGE=>", image);
       const res = await axios.post(
+        image,
         "http://localhost:5000/api/product/createproduct",
         body,
         config

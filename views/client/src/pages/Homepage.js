@@ -37,9 +37,9 @@ const Homepage = () => {
       <CardContainer title="Laptops and Desktops" category="laptop" />
       <CardContainer title="Mobiles and Tablets" category="mobile" />
       <CardContainer title="Digital Smart Watches" category="watch" />
-      <CardContainer title="Speakers and Microphones" category="speakers" />
-      <CardContainer title="Smart T.V." category="tv" />
-      <CardContainer title="Camera" category="camera" />
+      <CardContainer title="Speakers and Microphones" category="speaker" />
+      {/* <CardContainer title="Smart T.V." category="tv" />
+      <CardContainer title="Camera" category="camera" /> */}
       {/* <div>
         {console.log(products)}
         <img src={products.products[0].image} alt="" />
